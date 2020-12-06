@@ -53,5 +53,5 @@ MAIN PROC
         MOV AH, 4CH
         INT 21H
     
-ENDS
+CODE ENDS
 END MAIN
