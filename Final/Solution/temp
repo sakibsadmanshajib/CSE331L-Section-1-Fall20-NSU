@@ -1,0 +1,102 @@
+prnstr macro msg
+        mov ah, 09h
+        lea dx, msg
+        int 21h
+        endm
+
+data segment
+        hex db 5
+            db 0
+            db 5 dup(0)
+        ans db 17 dup(" ")
+        buf1 db "Enter the hexadecimal nmber : $"
+        buf2 db 0ah, "The equivalent binary value is : $"
+        buf3 db 0dh, 0ah, "Invalid hexadecimal value...$"
+        multiplier db 10h
+data ends
+
+code segment
+        assume cs:code, ds:data
+start :
+        mov ax, data
+        mov ds, ax
+        mov es, ax
+
+        prnstr buf1
+
+        mov ah, 0ah
+        lea dx, hex
+        int 21h
+
+        mov si, offset hex + 2
+        mov cx, 0000h
+        mov cl, byte ptr [si-1]
+subtract :
+        mov al, byte ptr [si]
+        cmp al, 41h
+        jb numb
+        cmp al, 47h
+    jb cont1
+        prnstr buf3
+        jmp stop
+cont1 :
+        sub al, 41h
+        add al, 0ah
+        jmp cont2
+numb :
+        cmp al, 30h
+        jnb cont3
+        prnstr buf3
+        jmp stop
+cont3 :
+        cmp al, 3ah
+        jb cont4
+        prnstr buf3
+        jmp stop
+cont4:
+        sub al, 30h
+cont2 :
+        mov byte ptr [si], al
+        inc si
+        loop subtract
+
+        mov ax, 0000h
+        mov si, offset hex + 2
+        mov cl, byte ptr [si-1]
+loop1 :
+        mul multiplier
+        mov bl, byte ptr [si]
+        mov bh, 00h
+        add ax, bx
+        inc si
+        loop loop1
+
+        mov bx, ax
+        mov ax, 8000h
+        mov di, offset ans
+        mov dx, 0000h
+next1 :
+        mov cx, 0000h
+next2 :
+        cmp bx, ax
+        jb cont
+        sub bx, ax
+        inc cx
+        jmp next2
+cont :
+        add cx, 30h
+        mov byte ptr [di], cl
+        inc di
+        mov cx, 0002h
+        div cx
+        cmp ax, 0000h
+        jnz next1
+
+        mov byte ptr [di], "$"
+        prnstr buf2
+        prnstr ans
+stop :
+        mov ax, 4c00h
+        int 21h
+code ends
+        end start
