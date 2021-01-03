@@ -1,8 +1,9 @@
 .MODEL SMALL 
 .STACK 100H
 
- .DATA    PROMPT_1  DB  \'Original value of AL : $\'
-    PROMPT_2  DB  0DH,0AH,\'Processed value of AL : $\' 
+ .DATA    
+ PROMPT_1  DB  "Original value of AL : $"
+    PROMPT_2  DB  0DH,0AH,"Processed value of AL : $" 
 
 .CODE 
 MAIN PROC

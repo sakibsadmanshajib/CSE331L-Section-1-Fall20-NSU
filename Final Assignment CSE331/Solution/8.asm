@@ -1,4 +1,4 @@
-***Let us consider the input: sakibsadmanshajib
+;Let us consider the input: sakibsadmanshajib
 .MODEL SMALL
 .STACK 100H
 .DATA
@@ -7,7 +7,7 @@ STRING DB 'sakibsadmanshajib', '$'
 STRING1 DB 'It is palindrome', '$'
 STRING2 DB 'It is not palindrome', '$'
 .CODE
-MAIN PROC FAR
+MAIN PROC
 MOV AX, @DATA
 MOV DS, AX
 ; check if the string is;
@@ -16,7 +16,7 @@ CALL Palindrome
 ;interrupt to exit
 MOV AH, 4CH
 INT 21H
-MAIN ENDP
+MAIN ENDP 
 Palindrome PROC
 ; load the starting address
 ; of the string
@@ -63,4 +63,4 @@ OUTPUT2:
     INT 21H
     RET
 Palindrome ENDP
-      MAIN ENDP END MAIN
+      END MAIN

@@ -1,7 +1,7 @@
 .MODEL SMALL 
 .STACK 100H
- .DATA    PROMPT
-  DB  \'The Lower Case Letters from z to a are: $\' 
+.DATA    
+ PROMPT DB  "The Lower Case Letters from z to a are: $" 
 
 .CODE  
  MAIN PROC
@@ -16,7 +16,7 @@
      MOV CX, 26           ; initialize CX
      MOV AH, 2            ; set output function 
 
-     MOV DL, 122                  ; set Dl with \'z\'    
+     MOV DL, 122                  ; set Dl with "z"    
 
 @LOOP:          ; loop start       
 INT 21H           ; print character       
