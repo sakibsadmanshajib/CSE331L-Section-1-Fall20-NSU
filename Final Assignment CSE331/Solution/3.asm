@@ -27,7 +27,7 @@ INT 21H
 AND BL, 0FH                  ; convert ascii to decimal code     
 
 MOV CL, 2                    ; divide AL by 4     
-SHR BL, CL     
+SHL BL, CL     
 
 OR BL, 30H                   ; convert decimal to ascii code
 
